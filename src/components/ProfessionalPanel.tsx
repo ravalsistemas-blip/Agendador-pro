@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useKV } from '@github/spark/hooks'
-import { Service, Professional, Appointment, BusinessSettings, AppointmentStatus } from '@/lib/types'
+import { Service, Professional, Appointment, BusinessSettings, AppointmentStatus, ProfessionalAccount } from '@/lib/types'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { CalendarDots, Users, Gear, ChartLine } from '@phosphor-icons/react'
 import ServicesManager from './professional/ServicesManager'
@@ -10,12 +10,16 @@ import SettingsManager from './professional/SettingsManager'
 import ReportsView from './professional/ReportsView'
 import { checkAndSendReminders } from '@/lib/notifications'
 
-export default function ProfessionalPanel() {
-  const [services] = useKV<Service[]>('services', [])
-  const [professionals] = useKV<Professional[]>('professionals', [])
-  const [appointments, setAppointments] = useKV<Appointment[]>('appointments', [])
-  const [businessSettings] = useKV<BusinessSettings>('businessSettings', {
-    businessName: 'Meu Negócio',
+type ProfessionalPanelProps = {
+  professionalAccount: ProfessionalAccount
+}
+
+export default function ProfessionalPanel({ professionalAccount }: ProfessionalPanelProps) {
+  const [services] = useKV<Service[]>(`services_${professionalAccount.id}`, [])
+  const [professionals] = useKV<Professional[]>(`professionals_${professionalAccount.id}`, [])
+  const [appointments, setAppointments] = useKV<Appointment[]>(`appointments_${professionalAccount.id}`, [])
+  const [businessSettings, setBusinessSettings] = useKV<BusinessSettings>(`businessSettings_${professionalAccount.id}`, {
+    businessName: professionalAccount.businessName,
     slotDuration: 30,
     businessHours: {
       'segunda-feira': { enabled: true, start: '09:00', end: '18:00' },
@@ -29,6 +33,20 @@ export default function ProfessionalPanel() {
     bookingAdvance: 30,
     reminderTime: 120
   })
+
+  useEffect(() => {
+    if (businessSettings && businessSettings.businessName !== professionalAccount.businessName) {
+      setBusinessSettings((current) => ({
+        ...(current || {
+          slotDuration: 30,
+          businessHours: {},
+          bookingAdvance: 30,
+          reminderTime: 120
+        }),
+        businessName: professionalAccount.businessName
+      }))
+    }
+  }, [professionalAccount.businessName, businessSettings, setBusinessSettings])
 
   useEffect(() => {
     if (!appointments || !services || !professionals || !businessSettings) return
@@ -69,8 +87,12 @@ export default function ProfessionalPanel() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6">
-        <h2 className="text-3xl font-bold tracking-tight">Painel do Profissional</h2>
-        <p className="text-muted-foreground">Gerencie seus agendamentos e serviços</p>
+        <div className="flex items-start justify-between">
+          <div>
+            <h2 className="text-3xl font-bold tracking-tight">{professionalAccount.businessName}</h2>
+            <p className="text-muted-foreground">{professionalAccount.category}</p>
+          </div>
+        </div>
       </div>
 
       <Tabs defaultValue="agenda" className="space-y-6">
@@ -108,15 +130,15 @@ export default function ProfessionalPanel() {
         </TabsContent>
 
         <TabsContent value="services">
-          <ServicesManager />
+          <ServicesManager professionalId={professionalAccount.id} />
         </TabsContent>
 
         <TabsContent value="professionals">
-          <ProfessionalsManager />
+          <ProfessionalsManager professionalId={professionalAccount.id} />
         </TabsContent>
 
         <TabsContent value="settings">
-          <SettingsManager />
+          <SettingsManager professionalId={professionalAccount.id} />
         </TabsContent>
 
         <TabsContent value="reports">

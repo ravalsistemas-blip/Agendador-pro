@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useKV } from '@github/spark/hooks'
-import { Service, Professional, Appointment, BusinessSettings } from '@/lib/types'
+import { Service, Professional, Appointment, BusinessSettings, ClientAccount } from '@/lib/types'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -16,7 +16,11 @@ import { sendConfirmationToClient, sendNotificationToProfessional } from '@/lib/
 import { format, parse, startOfDay } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
-export default function ClientPanel() {
+type ClientPanelProps = {
+  clientAccount?: ClientAccount
+}
+
+export default function ClientPanel({ clientAccount }: ClientPanelProps) {
   const [services] = useKV<Service[]>('services', [])
   const [professionals] = useKV<Professional[]>('professionals', [])
   const [appointments, setAppointments] = useKV<Appointment[]>('appointments', [])
@@ -32,8 +36,10 @@ export default function ClientPanel() {
   const [selectedProfessional, setSelectedProfessional] = useState<Professional | null>(null)
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
   const [selectedTime, setSelectedTime] = useState<string | null>(null)
-  const [clientName, setClientName] = useState('')
-  const [clientPhone, setClientPhone] = useState('')
+  const [clientName, setClientName] = useState(
+    clientAccount ? `${clientAccount.firstName} ${clientAccount.lastName}` : ''
+  )
+  const [clientPhone, setClientPhone] = useState(clientAccount?.phone || '')
   const [clientEmail, setClientEmail] = useState('')
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [confirmedAppointment, setConfirmedAppointment] = useState<Appointment | null>(null)
@@ -132,7 +138,9 @@ export default function ClientPanel() {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="text-center space-y-2">
-          <h2 className="text-3xl font-bold tracking-tight">Agendar Horário</h2>
+          <h2 className="text-3xl font-bold tracking-tight">
+            {clientAccount ? `Olá, ${clientAccount.firstName}!` : 'Agendar Horário'}
+          </h2>
           <p className="text-muted-foreground">
             Escolha o serviço, profissional e horário desejado
           </p>
@@ -294,6 +302,11 @@ export default function ClientPanel() {
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg">5. Seus Dados</CardTitle>
+                  {clientAccount && (
+                    <p className="text-sm text-muted-foreground">
+                      Seus dados já estão salvos
+                    </p>
+                  )}
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
@@ -303,6 +316,7 @@ export default function ClientPanel() {
                       placeholder="Seu nome"
                       value={clientName}
                       onChange={(e) => setClientName(e.target.value)}
+                      disabled={!!clientAccount}
                     />
                   </div>
 
@@ -313,6 +327,7 @@ export default function ClientPanel() {
                       placeholder="(00) 00000-0000"
                       value={clientPhone}
                       onChange={(e) => setClientPhone(e.target.value)}
+                      disabled={!!clientAccount}
                     />
                   </div>
 

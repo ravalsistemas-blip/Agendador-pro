@@ -9,8 +9,12 @@ import { Switch } from '@/components/ui/switch'
 import { Separator } from '@/components/ui/separator'
 import { toast } from 'sonner'
 
-export default function SettingsManager() {
-  const [settings, setSettings] = useKV<BusinessSettings>('businessSettings', {
+type SettingsManagerProps = {
+  professionalId: string
+}
+
+export default function SettingsManager({ professionalId }: SettingsManagerProps) {
+  const [settings, setSettings] = useKV<BusinessSettings>(`businessSettings_${professionalId}`, {
     businessName: 'Meu Negócio',
     slotDuration: 30,
     businessHours: {

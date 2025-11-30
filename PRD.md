@@ -12,6 +12,27 @@ Sistema de agendamento profissional completo que conecta prestadores de serviço
 
 ## Essential Features
 
+### Sistema de Autenticação - Cadastro de Profissional
+- **Functionality**: Registro completo de conta profissional com seleção de categoria de atuação
+- **Purpose**: Criar conta única por profissional para gerenciar seu negócio de forma isolada
+- **Trigger**: Acesso ao painel profissional sem estar logado
+- **Progression**: Acessa área profissional → Clica em "Cadastre-se" → Preenche nome completo, telefone, nome do negócio → Seleciona categoria profissional (25 opções organizadas por área) → Define e-mail e senha → Cria conta → Faz login automaticamente
+- **Success criteria**: Conta criada, profissional logado, dados do negócio salvos nas configurações
+
+### Sistema de Autenticação - Login de Profissional
+- **Functionality**: Login com e-mail e senha para profissionais cadastrados
+- **Purpose**: Acesso seguro e individualizado ao painel de gestão
+- **Trigger**: Acesso ao painel profissional ou logout
+- **Progression**: Acessa área profissional → Digita e-mail e senha → Clica em "Entrar" → Sistema valida credenciais → Redireciona para painel
+- **Success criteria**: Profissional autenticado com acesso exclusivo aos seus dados
+
+### Sistema de Autenticação - Registro Simplificado de Cliente
+- **Functionality**: Coleta de dados básicos do cliente para facilitar agendamentos futuros
+- **Purpose**: Pré-preencher formulários e criar histórico do cliente
+- **Trigger**: Cliente acessa área de agendamento pela primeira vez
+- **Progression**: Acessa área cliente → Modal aparece solicitando dados → Preenche nome, sobrenome, WhatsApp (obrigatórios) e CPF (opcional) → Salva ou pula → Dados armazenados localmente
+- **Success criteria**: Dados do cliente salvos e utilizados para pré-preencher formulários de agendamento
+
 ### Painel do Profissional - Cadastro de Serviços
 - **Functionality**: Criar, editar e excluir serviços oferecidos com nome, duração e preço
 - **Purpose**: Definir catálogo de serviços disponíveis para agendamento

@@ -11,8 +11,12 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { generateId } from '@/lib/utils'
 import { toast } from 'sonner'
 
-export default function ProfessionalsManager() {
-  const [professionals, setProfessionals] = useKV<Professional[]>('professionals', [])
+type ProfessionalsManagerProps = {
+  professionalId: string
+}
+
+export default function ProfessionalsManager({ professionalId }: ProfessionalsManagerProps) {
+  const [professionals, setProfessionals] = useKV<Professional[]>(`professionals_${professionalId}`, [])
   const [editingProfessional, setEditingProfessional] = useState<Professional | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   

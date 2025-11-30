@@ -11,8 +11,12 @@ import { Plus, Pencil, Trash, Clock } from '@phosphor-icons/react'
 import { formatCurrency, generateId } from '@/lib/utils'
 import { toast } from 'sonner'
 
-export default function ServicesManager() {
-  const [services, setServices] = useKV<Service[]>('services', [])
+type ServicesManagerProps = {
+  professionalId: string
+}
+
+export default function ServicesManager({ professionalId }: ServicesManagerProps) {
+  const [services, setServices] = useKV<Service[]>(`services_${professionalId}`, [])
   const [editingService, setEditingService] = useState<Service | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   

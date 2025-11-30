@@ -1,8 +1,55 @@
+export type ProfessionalCategory = 
+  | 'Cabeleireiro'
+  | 'Barbearia'
+  | 'Manicure/pedicure'
+  | 'Designer de sobrancelhas'
+  | 'Depilação'
+  | 'Clínicas de estética'
+  | 'Psicólogo'
+  | 'Nutricionista'
+  | 'Fisioterapeuta'
+  | 'Personal trainer'
+  | 'Fonoaudiólogo'
+  | 'Quiropraxista'
+  | 'Médico'
+  | 'Banho e tosa'
+  | 'Veterinário'
+  | 'Mecânico'
+  | 'Lava-rápido / estética automotiva'
+  | 'Advogado'
+  | 'Contador'
+  | 'Consultor de negócios'
+  | 'Coach / mentor'
+  | 'Fotógrafo / filmagem'
+  | 'Professor particular'
+  | 'Escola de idiomas'
+  | 'Aulas de música / dança / instrumentos'
+
+export type ProfessionalAccount = {
+  id: string
+  email: string
+  password: string
+  businessName: string
+  category: ProfessionalCategory
+  ownerName: string
+  phone: string
+  createdAt: string
+}
+
 export type Professional = {
   id: string
   name: string
   specialty?: string
   avatar?: string
+}
+
+export type ClientAccount = {
+  id: string
+  firstName: string
+  lastName: string
+  phone: string
+  cpf?: string
+  createdAt: string
 }
 
 export type Service = {
