@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { useKV } from '@github/spark/hooks'
+import { useLocalStorage } from '@/hooks/use-local-storage'
 import { Service, Professional, Appointment, BusinessSettings, ClientAccount } from '@/lib/types'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -21,10 +21,10 @@ type ClientPanelProps = {
 }
 
 export default function ClientPanel({ clientAccount }: ClientPanelProps) {
-  const [services] = useKV<Service[]>('services', [])
-  const [professionals] = useKV<Professional[]>('professionals', [])
-  const [appointments, setAppointments] = useKV<Appointment[]>('appointments', [])
-  const [businessSettings] = useKV<BusinessSettings>('businessSettings', {
+  const [services] = useLocalStorage<Service[]>('services', [])
+  const [professionals] = useLocalStorage<Professional[]>('professionals', [])
+  const [appointments, setAppointments] = useLocalStorage<Appointment[]>('appointments', [])
+  const [businessSettings] = useLocalStorage<BusinessSettings>('businessSettings', {
     businessName: 'Meu Negócio',
     slotDuration: 30,
     businessHours: {},

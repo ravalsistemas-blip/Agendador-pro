@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useKV } from '@github/spark/hooks'
+import { useLocalStorage } from '@/hooks/use-local-storage'
 import { Service, Professional, Appointment, BusinessSettings, AppointmentStatus, ProfessionalAccount } from '@/lib/types'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { CalendarDots, Users, Gear, ChartLine } from '@phosphor-icons/react'
@@ -15,10 +15,10 @@ type ProfessionalPanelProps = {
 }
 
 export default function ProfessionalPanel({ professionalAccount }: ProfessionalPanelProps) {
-  const [services] = useKV<Service[]>(`services_${professionalAccount.id}`, [])
-  const [professionals] = useKV<Professional[]>(`professionals_${professionalAccount.id}`, [])
-  const [appointments, setAppointments] = useKV<Appointment[]>(`appointments_${professionalAccount.id}`, [])
-  const [businessSettings, setBusinessSettings] = useKV<BusinessSettings>(`businessSettings_${professionalAccount.id}`, {
+  const [services] = useLocalStorage<Service[]>(`services_${professionalAccount.id}`, [])
+  const [professionals] = useLocalStorage<Professional[]>(`professionals_${professionalAccount.id}`, [])
+  const [appointments, setAppointments] = useLocalStorage<Appointment[]>(`appointments_${professionalAccount.id}`, [])
+  const [businessSettings, setBusinessSettings] = useLocalStorage<BusinessSettings>(`businessSettings_${professionalAccount.id}`, {
     businessName: professionalAccount.businessName,
     slotDuration: 30,
     businessHours: {

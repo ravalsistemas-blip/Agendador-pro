@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useKV } from '@github/spark/hooks'
+import { useLocalStorage } from '@/hooks/use-local-storage'
 import { Service } from '@/lib/types'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -16,7 +16,7 @@ type ServicesManagerProps = {
 }
 
 export default function ServicesManager({ professionalId }: ServicesManagerProps) {
-  const [services, setServices] = useKV<Service[]>(`services_${professionalId}`, [])
+  const [services, setServices] = useLocalStorage<Service[]>(`services_${professionalId}`, [])
   const [editingService, setEditingService] = useState<Service | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   

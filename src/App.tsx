@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useKV } from '@github/spark/hooks'
+import { useLocalStorage } from '@/hooks/use-local-storage'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { Toaster } from '@/components/ui/sonner'
@@ -15,10 +15,10 @@ import ClientRegister from './components/auth/ClientRegister'
 
 function App() {
   const [view, setView] = useState<'client' | 'professional'>('client')
-  const [professionalAccounts, setProfessionalAccounts] = useKV<ProfessionalAccount[]>('professionalAccounts', [])
-  const [clientAccounts, setClientAccounts] = useKV<ClientAccount[]>('clientAccounts', [])
-  const [currentProfessional, setCurrentProfessional] = useKV<string | null>('currentProfessional', null)
-  const [currentClient, setCurrentClient] = useKV<string | null>('currentClient', null)
+  const [professionalAccounts, setProfessionalAccounts] = useLocalStorage<ProfessionalAccount[]>('professionalAccounts', [])
+  const [clientAccounts, setClientAccounts] = useLocalStorage<ClientAccount[]>('clientAccounts', [])
+  const [currentProfessional, setCurrentProfessional] = useLocalStorage<string | null>('currentProfessional', null)
+  const [currentClient, setCurrentClient] = useLocalStorage<string | null>('currentClient', null)
   const [professionalAuthView, setProfessionalAuthView] = useState<'login' | 'register'>('login')
   const [showClientRegister, setShowClientRegister] = useState(false)
   const [loginError, setLoginError] = useState('')

@@ -1,23 +1,30 @@
-# ✨ Welcome to Your Spark Template!
-You've just launched your brand-new Spark Template Codespace — everything’s fired up and ready for you to explore, build, and create with Spark!
+# 📅 Agendador Pro
 
-This template is your blank canvas. It comes with a minimal setup to help you get started quickly with Spark development.
+Sistema profissional de agendamento para empresas e profissionais autônomos.
 
-🚀 What's Inside?
-- A clean, minimal Spark environment
-- Pre-configured for local development
-- Ready to scale with your ideas
-  
-🧠 What Can You Do?
+## 🚀 Recursos
 
-Right now, this is just a starting point — the perfect place to begin building and testing your Spark applications.
+- Gerenciamento de agendamentos
+- Painel para profissionais e clientes
+- Controle de serviços e profissionais
+- Notificações e lembretes
+- Relatórios e estatísticas
 
-🧹 Just Exploring?
-No problem! If you were just checking things out and don’t need to keep this code:
+## 🛠️ Tecnologias
 
-- Simply delete your Spark.
-- Everything will be cleaned up — no traces left behind.
+- React + TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui
+- date-fns
 
-📄 License For Spark Template Resources 
+## 📦 Instalação
 
-The Spark Template files and resources from GitHub are licensed under the terms of the MIT license, Copyright GitHub, Inc.
+```bash
+npm install
+npm run dev
+```
+
+## 📄 Licença
+
+MIT License

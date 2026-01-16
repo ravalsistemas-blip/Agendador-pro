@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useKV } from '@github/spark/hooks'
+import { useLocalStorage } from '@/hooks/use-local-storage'
 import { Professional } from '@/lib/types'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -16,7 +16,7 @@ type ProfessionalsManagerProps = {
 }
 
 export default function ProfessionalsManager({ professionalId }: ProfessionalsManagerProps) {
-  const [professionals, setProfessionals] = useKV<Professional[]>(`professionals_${professionalId}`, [])
+  const [professionals, setProfessionals] = useLocalStorage<Professional[]>(`professionals_${professionalId}`, [])
   const [editingProfessional, setEditingProfessional] = useState<Professional | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   

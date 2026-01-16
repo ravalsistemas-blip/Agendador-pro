@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useKV } from '@github/spark/hooks'
+import { useLocalStorage } from '@/hooks/use-local-storage'
 import { BusinessSettings, BusinessHours } from '@/lib/types'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -14,7 +14,7 @@ type SettingsManagerProps = {
 }
 
 export default function SettingsManager({ professionalId }: SettingsManagerProps) {
-  const [settings, setSettings] = useKV<BusinessSettings>(`businessSettings_${professionalId}`, {
+  const [settings, setSettings] = useLocalStorage<BusinessSettings>(`businessSettings_${professionalId}`, {
     businessName: 'Meu Negócio',
     slotDuration: 30,
     businessHours: {
